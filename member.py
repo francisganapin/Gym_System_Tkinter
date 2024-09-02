@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS member (
     Gender TEXT,
     Birthday TEXT,
     Address TEXT,
-    PRIMARY KEY (Id)
+
 );
 
 ''')

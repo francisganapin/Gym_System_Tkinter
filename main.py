@@ -36,14 +36,13 @@ def display_member_data():
         return
     member = fetch_data_member(int(member_id))
     if member:
-        name_label.config(text=f"Name:{member[0]}")
+      
         expiry_label.config(text=f"Expiry: {member[1]}")
         root.after(10000,clear_labels)
     else:
         messagebox.showinfo("Not Found")
     
 def clear_labels():
-    name_label.config(text='')
     expiry_label.config(text='')
 
 ############base################
@@ -65,6 +64,8 @@ root.tk.call('source', 'forest-dark.tcl')
 style = ttk.Style(root)
 style.theme_use('forest-dark')
 frame = ttk.Frame(root)
+
+
 frame.pack(padx=20, pady=20, fill="both", expand=True)
 ############base################
 
@@ -89,9 +90,6 @@ id_entry.grid(row=2, column=0, padx=5, pady=5)
 search_button = ttk.Button(frame, text="Search", command=display_member_data, style='Accent.TButton')
 search_button.grid(row=3, column=0, padx=5, pady=5)
 
-# Labels for displaying name and expiry
-name_label = ttk.Label(frame, text="", font=('Helvetica', 16))
-name_label.grid(row=4, column=0, padx=5, pady=5)
 
 expiry_label = ttk.Label(frame, text="", font=('Helvetica', 16))
 expiry_label.grid(row=5, column=0, padx=5, pady=5)

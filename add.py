@@ -66,7 +66,7 @@ def load_data(treeview):
     conn.close()
 
 def insert_row():
-    Id = id_entry.get()
+    Id_card = id_entry.get()
     Name = name_entry.get()
     Email = email_entry.get()
     Expiry = date_entry.get()
@@ -89,9 +89,9 @@ def insert_row():
 
     try:
         cursor.execute('''
-            INSERT INTO member (Id, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address)
+            INSERT INTO member (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (Id, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address))
+        ''', (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address))
         
         conn.commit()
         print("Row inserted successfully")
