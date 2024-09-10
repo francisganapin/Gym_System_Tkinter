@@ -49,13 +49,10 @@ def edit_item(treeview, name_entry, expiry_entry):
         # Get the item ID from the Treeview (assuming the first column is ID)
         item_id = treeview.item(selected_item)['values'][0]
 
-        # Get the new values from Entry widgets
-        new_name = name_entry.get()
         new_expiry = expiry_entry.get()
 
         # Update the Treeview with the new values
         current_values = list(treeview.item(selected_item)['values'])
-        current_values[1] = new_name
         current_values[3] = new_expiry  # Assuming column 3 is Expiry
 
         treeview.item(selected_item, values=current_values)
@@ -70,7 +67,7 @@ def edit_item(treeview, name_entry, expiry_entry):
             # Update the Name and Expiry columns in the member table
             cursor.execute('''
                 UPDATE member
-                SET Name = ?, Expiry = ?
+                Expiry = ?
                 WHERE Id = ?
             ''', (new_name, new_expiry, item_id))
 
@@ -168,11 +165,7 @@ search_id_button.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 search_name_button = ttk.Button(search_frame, text="Search Name", command=lambda: search_data(treeview, 'Name', search_name_entry))
 search_name_button.grid(row=1, column=1, padx=5, pady=5, sticky="w")
 
-# Name Entry
-name_label = ttk.Label(search_frame, text="New Name:")
-name_label.grid(row=2, column=1, padx=5, pady=5, sticky="e")
-name_entry = ttk.Entry(search_frame, width=20)
-name_entry.grid(row=2, column=0, padx=5, pady=5, sticky="w")
+
 
 # Expiry Entry
 expiry_label = ttk.Label(search_frame, text="New Expiry:")
@@ -181,7 +174,7 @@ expiry_entry = DateEntry(search_frame, width=12)  # Assuming you have a DateEntr
 expiry_entry.grid(row=3, column=0, padx=5, pady=5, sticky="w")
 
 # Edit Button
-edit_button = ttk.Button(search_frame, text="Edit Item", command=lambda: edit_item(treeview, name_entry, expiry_entry))
+edit_button = ttk.Button(search_frame, text="Edit Item", command=lambda: edit_item(treeview,  expiry_entry))
 edit_button.grid(row=4, column=0, columnspan=2, pady=10)
 
 
