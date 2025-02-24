@@ -66,6 +66,7 @@ def load_data(treeview):
     conn.close()
 
 def insert_row():
+
     Id_card = id_entry.get()
     Name = name_entry.get()
     Email = email_entry.get()
@@ -92,9 +93,11 @@ def insert_row():
             INSERT INTO member (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address))
-        
+        last_inserted_id = cursor.lastrowid
         conn.commit()
         print("Row inserted successfully")
+        return last_inserted_id
+    
     except sqlite3.IntegrityError as e:
         print(f"SQLite error: {e}")
     finally:
@@ -102,6 +105,7 @@ def insert_row():
 
 # Create the main window
 member_or_not = ['Member','Not Member']
+
 male_or_female =['Gender Any','Male','Female']
 
 

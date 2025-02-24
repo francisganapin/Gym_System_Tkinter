@@ -43,8 +43,10 @@ def load_data(treeview):
 
     conn.close()
 
-def edit_item(treeview, name_entry, expiry_entry):
+def edit_item(treeview, expiry_entry):
+
     selected_item = treeview.focus()
+
     if selected_item:
         # Get the item ID from the Treeview (assuming the first column is ID)
         item_id = treeview.item(selected_item)['values'][0]
@@ -53,7 +55,7 @@ def edit_item(treeview, name_entry, expiry_entry):
 
         # Update the Treeview with the new values
         current_values = list(treeview.item(selected_item)['values'])
-        current_values[3] = new_expiry  # Assuming column 3 is Expiry
+        current_values[4] = new_expiry  # Assuming column 3 is Expiry
 
         treeview.item(selected_item, values=current_values)
 
@@ -67,12 +69,13 @@ def edit_item(treeview, name_entry, expiry_entry):
             # Update the Name and Expiry columns in the member table
             cursor.execute('''
                 UPDATE member
-                Expiry = ?
+                SET Expiry = ?
                 WHERE Id = ?
-            ''', (new_name, new_expiry, item_id))
+            ''', (new_expiry, item_id))
 
             # Commit the changes to the database
             conn.commit()
+
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"An error occurred: {e}")
         finally:
@@ -154,16 +157,12 @@ search_id_entry.insert(0, "Search by ID")
 search_id_entry.bind("<FocusIn>", lambda e: search_id_entry.delete('0', 'end'))
 search_id_entry.grid(row=0, column=0, padx=5, pady=5)
 
-search_name_entry = ttk.Entry(search_frame, width=20)
-search_name_entry.insert(0, "Search by Name")
-search_name_entry.bind("<FocusIn>", lambda e: search_name_entry.delete('0', 'end'))
-search_name_entry.grid(row=1, column=0, padx=5, pady=5)
+
 
 search_id_button = ttk.Button(search_frame, text="Search ID", command=lambda: search_data(treeview, 'ID', search_id_entry))
 search_id_button.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
-search_name_button = ttk.Button(search_frame, text="Search Name", command=lambda: search_data(treeview, 'Name', search_name_entry))
-search_name_button.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+
 
 
 
@@ -176,11 +175,6 @@ expiry_entry.grid(row=3, column=0, padx=5, pady=5, sticky="w")
 # Edit Button
 edit_button = ttk.Button(search_frame, text="Edit Item", command=lambda: edit_item(treeview,  expiry_entry))
 edit_button.grid(row=4, column=0, columnspan=2, pady=10)
-
-
-
-
-
 
 
 
