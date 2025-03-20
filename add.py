@@ -68,7 +68,9 @@ def load_data(treeview):
 def insert_row():
 
     Id_card = id_entry.get()
-    Name = name_entry.get()
+    
+    First_name = first_name_entry.get()
+    Last_name = last_name_entry.get()
     Email = email_entry.get()
     Expiry = date_entry.get()
     Contact = contact_entry.get()
@@ -90,9 +92,9 @@ def insert_row():
 
     try:
         cursor.execute('''
-            INSERT INTO member (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (Id_card, Name, Email, Expiry, Contact, Status, Gender, Birthday, Address))
+            INSERT INTO member (Id_card, First_name,Last_name, Email, Expiry, Contact, Status, Gender, Birthday, Address)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+        ''', (Id_card, First_name,Last_name, Email, Expiry, Contact, Status, Gender, Birthday, Address))
         last_inserted_id = cursor.lastrowid
         conn.commit()
         print("Row inserted successfully")
@@ -131,21 +133,26 @@ id_entry.insert(0, "Id")
 id_entry.bind("<FocusIn>", lambda e: id_entry.delete('0', 'end'))
 id_entry.grid(row=0, column=0, padx=5, pady=(0, 5), sticky="ew")
 
-name_entry = ttk.Entry(widgets_frame)
-name_entry.insert(0, "Name")
-name_entry.bind("<FocusIn>", lambda e: name_entry.delete('0', 'end'))
-name_entry.grid(row=1, column=0, padx=5, pady=(0, 5), sticky="ew")
+first_name_entry = ttk.Entry(widgets_frame)
+first_name_entry.insert(0, "First Name")
+first_name_entry.bind("<FocusIn>", lambda e: first_name_entry.delete('0', 'end'))
+first_name_entry.grid(row=1, column=0, padx=5, pady=(0, 5), sticky="ew")
+
+last_name_entry = ttk.Entry(widgets_frame)
+last_name_entry.insert(0, "Last Name")
+last_name_entry.bind("<FocusIn>", lambda e: last_name_entry.delete('0', 'end'))
+last_name_entry.grid(row=2, column=0, padx=5, pady=(0, 5), sticky="ew")
 
 email_entry = ttk.Entry(widgets_frame)
 email_entry.insert(0, "Email")
 email_entry.bind("<FocusIn>", lambda e: email_entry.delete('0', 'end'))
-email_entry.grid(row=2, column=0, padx=5, pady=(0, 5), sticky="ew")
+email_entry.grid(row=3, column=0, padx=5, pady=(0, 5), sticky="ew")
 
 separator_for_expiry = ttk.Label(widgets_frame,text='Expiry')
-separator_for_expiry.grid(row=3,column=0,sticky='nsew',padx=6,pady=(7))
+separator_for_expiry.grid(row=4,column=0,sticky='nsew',padx=6,pady=(7))
 
 date_entry = DateEntry(widgets_frame)
-date_entry.grid(row=4, column=0, padx=5, pady=(0, 5), sticky="ew")
+date_entry.grid(row=5, column=0, padx=5, pady=(0, 5), sticky="ew")
 
 
 
@@ -167,10 +174,10 @@ male_or_female_status.grid(row=2, column=1, padx=5, pady=(0, 5), sticky="ew")
 
 
 separator_for_birthday = ttk.Label(widgets_frame,text='Birthday')
-separator_for_birthday.grid(row=3,column=1,sticky='nsew',padx=6,pady=(7))
+separator_for_birthday.grid(row=4,column=1,sticky='nsew',padx=6,pady=(7))
 
 birthday_entry = DateEntry(widgets_frame)
-birthday_entry.grid(row=4, column=1, padx=5, pady=(0, 5), sticky="ew")
+birthday_entry.grid(row=5, column=1, padx=5, pady=(0, 5), sticky="ew")
 
 
 # Data of N of Member Input bar in first row
